@@ -35,6 +35,7 @@ Vale mencionar que McCarty, Backus y Milner recibieron el premio Turing, que es 
 ### Entornos
 
 GCH: (Glasgow Haskell Compiler) Más popular. ghci es el intérprete interactivo.
+Página oficial [Haskell](https://www.haskell.org/)
 
 ### Interpretes
 Es un programa que analiza un programa y lo ejecuta.
@@ -64,10 +65,12 @@ Comandos:
 :t Tipo de una expresión. Ejemplos…
 :module + módulo Importar un módulo (import módulo)
 ```
+
+### Standar prelude
+
+Haskell viene con un gran número de funciones, las cuales estan definidas en un archivo llamado _standar prelude_ En adición a las funciones numéricas tales como `+` o `*`
 ```haskell
-doubleSmallNumber x = if x > 100  
-                        then x  
-                        else x*2   
+head [1,2,3,4,5]
 ```
 Laboratorio de estructuras discretas 2021-1
 ```shell
