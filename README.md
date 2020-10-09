@@ -19,6 +19,19 @@ Un __tipo__ es un conjunto de elementos que son creados por una definición form
 + Funciones genéricas
 + Evaluación perezosas
 
+## Historia
+
++ 1930, Alonzo Church desarrolla el cácluclo lambda. una simple pero poderosa teoria de funciones.
++ 1950, John McCarty desarrolla Lisp, reconocido como el primer lenguaje de programación funcional.
++ 1960, Peter Landin desarrolla ISWIM ("If you see what I mean"). El primer lenguaje puramente funcional.
++ 1970, John Backus desarrolla FP ("Functional Programming"), un lenguaje que hace énfasis en funciones de orden superior.
++ 1980, David Turner desarrolla un número de lenguajes perezosos.
++ 1987, Un comité internacional inicia el desarrollo de Haskell, nombrado así por Haskell Curry.
++ 2003, El comité de Haskell publica el Haskell Report, el cual define la esperada versión estable de Haskell.
++ 2010, Una versión revisada y actualizada del Haskell Report fue publicado.
+
+Vale mencionar que McCarty, Backus y Milner recibieron el premio Turing, que es considerado el Nobel de computación.
+
 ### Instalación Haskell
 
 ```shell
