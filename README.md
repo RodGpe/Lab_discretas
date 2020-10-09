@@ -68,7 +68,36 @@ Comandos:
 
 ### Standar prelude
 
-Haskell viene con un gran número de funciones, las cuales estan definidas en un archivo llamado _standar prelude_ En adición a las funciones numéricas tales como `+` o `*`
+Haskell viene con un gran número de funciones, las cuales estan definidas en un archivo llamado _standar prelude_ En adición a las funciones numéricas tales como `+` o `*`, el preludio provee funciones útiles para operar con listas. En Haskell, los elementos de una lista se encierran entre corchetes y son separados por comas como en `[1,2,3,4,5]`. Algunas de las funciones más usadas son:
+```shell
+> head [1,2,3,4,5]
+1
+> tail [1,2,3,4,5]
+[2,3,4,5]
+> [1,2,3,4,5] !! 2
+3
+> take 3 [1,2,3,4,5]
+[1,2,3]
+> drop 3 [1,2,3,4,5]
+[4,5]
+> length [1,2,3,4,5]
+5
+> sum [1,2,3,4,5]
+15
+> product [1,2,3,4,5]
+120
+> reverse [1,2,3,4,5]
+[5,4,3,2,1]
+
+```
+
+### Aplicación de funciones
+
+En matemáticas la aplicación de funciones es usualmente denotada encerrando los argumentos en parentesis, mientras que la multiplicación de dos valores se denota silenciosamente, escrbiendo los dos valores uno junto al otro. Por ejemplo, la expresión
+- <img src="https://latex.codecogs.com/gif.latex?O_t=\text { Onset event at time bin } t " /> 
+
+
+
 ```haskell
 head [1,2,3,4,5]
 ```
