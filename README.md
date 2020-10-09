@@ -125,22 +125,22 @@ f(x)g(y) | f x * g y
 ### Operadores 
 Tipoes de operadores:
 
-`+` Suma.
-`-` Resta.
-`*` Producto.
-`**` Potencia en “reales”.
-`div` División en enteros.
-`/` División en “reales”.
-`<` Menor qué.
-`<=` Menor o igual qué. (<=)
-`>` Mayor qué.
-`>=` Mayor o igual qué. (>=)
-`==` Igualdad (==)
-`++` Concatenación.
-`\\` Diferencia entre listas (Import Data.List)
++ `+` Suma.
++ `-` Resta.
++ `*` Producto.
++ `**` Potencia en “reales”.
++ `div` División en enteros.
++ `/` División en “reales”.
++ `<` Menor qué.
++ `<=` Menor o igual qué. (<=)
++ `>` Mayor qué.
++ `>=` Mayor o igual qué. (>=)
++ `==` Igualdad (==)
++ `++` Concatenación.
++ `\\` Diferencia entre listas (Import Data.List)
 
 Usar `:t` dentro del interprete para consultar el tipo. Ej 
-```console
+```shell
 Prelude> :t 3.0
 3.0 :: Fractional t => t
 Prelude> :t pi
