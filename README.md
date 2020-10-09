@@ -117,6 +117,7 @@ f(x)g(y) | f x * g y
 ### Tipos primitivos
 + Int (enteros)
 + Float/Double
++ Bool
 + Char (caracteres)
 + “String” ([Char]) (Cadenas de texto)
 + (t1, t2, …, tn) tuplas (tamaño específico)
@@ -146,20 +147,29 @@ Prelude> :t 3.0
 Prelude> :t pi
 pi :: Floating a => a
 ```
+Ejemplo de una función en haskell
+
 ```haskell
 succN n = n +1  
 doble x = x + x
 doble2 x = x * 2
-
+```
+Cómo se evalua la función
+ 
+```haskell
 --sustitución
 doble(x) = x + x
 doble(4) = 4 + 4
 head [1,2,3,4,5]
 ```
 
+Más ejemplos:
+
 ```haskell
 1 + 8
 9
+
+--prefija
 (+) 1 14
 15
 
@@ -172,10 +182,9 @@ div 4 2
 [1,2,3] ++ "amigo"
 
 ```
-usar parentesis para los negativos porque si no lo interpreta como resta 
-Laboratorio de estructuras discretas 2021-1
-```shell
-ghci> False || True  
-True   
-```
-Eso fue la shell
+### Clases
+
+Una clase es una interfaz que define algún comportamiento. Ej
++ Eq
++ Ord
++ Enum
