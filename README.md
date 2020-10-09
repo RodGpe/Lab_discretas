@@ -114,7 +114,38 @@ f(g(x)) | f (g x)
 f(x,g(y)) | f x (g y)
 f(x)g(y) | f x * g y
 
+### Tipos primitivos
++ Int (enteros)
++ Float/Double
++ Char (caracteres)
++ “String” ([Char]) (Cadenas de texto)
++ (t1, t2, …, tn) tuplas (tamaño específico)
++ [t1, t2, …, tn] listas (tamaño variable Y mismo tipo)
 
+### Operadores 
+Tipoes de operadores:
+
+`+` Suma.
+`-` Resta.
+`*` Producto.
+`**` Potencia en “reales”.
+`div` División en enteros.
+`/` División en “reales”.
+`<` Menor qué.
+`<=` Menor o igual qué. (<=)
+`>` Mayor qué.
+`>=` Mayor o igual qué. (>=)
+`==` Igualdad (==)
+`++` Concatenación.
+`\\` Diferencia entre listas (Import Data.List)
+
+Usar `:t` dentro del interprete para consultar el tipo. Ej 
+```console
+Prelude> :t 3.0
+3.0 :: Fractional t => t
+Prelude> :t pi
+pi :: Floating a => a
+```
 ```haskell
 succN n = n +1  
 doble x = x + x
@@ -125,7 +156,6 @@ doble(x) = x + x
 doble(4) = 4 + 4
 head [1,2,3,4,5]
 ```
-Usar `:t`
 
 ```haskell
 1 + 8
