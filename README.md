@@ -94,9 +94,25 @@ Haskell viene con un gran número de funciones, las cuales estan definidas en un
 ### Aplicación de funciones
 
 En matemáticas la aplicación de funciones es usualmente denotada encerrando los argumentos en parentesis, mientras que la multiplicación de dos valores se denota silenciosamente, escrbiendo los dos valores uno junto al otro. Por ejemplo, la expresión
+
 <img src="https://latex.codecogs.com/svg.latex?\Large&space;f(a,b)+cd" title="\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" />
 
+significa aplicar la función f a dos argumentos a y b, y sumarle el resultado el producto de c y d. Reflejando la idea central del lenguaje, la aplicación de función se denota silenciosamente usando espacio, mientras que la multiplicación de dos valores se denota con el operador `*`. Por ejemplo, la expresión anterior se escriben en haskell como: 
 
+```haskell
+f a b + c*d
+```
+Aún más, la aplicación de funciones tiene la mayor prioridad con los demás operadores en el lenguaje. Por ejemplo `f a + b` significa `(f a) + b` y no `f (a + b)`
+
+La siguiente table ejemplifica aún más las diferencias en la aplicación de función en Haskell.
+
+Matemáticas | Haskell
+--- | ---
+f(x) | f x
+f(x,y) | f x y
+f(g(x)) | f (g x)
+f(x,g(y)) | f x (g y)
+f(x)g(y) | f x * g y
 
 
 ```haskell
