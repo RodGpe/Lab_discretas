@@ -116,8 +116,33 @@ f(x)g(y) | f x * g y
 
 
 ```haskell
+succN n = n +1  
+doble x = x + x
+doble2 x = x * 2
+
+--sustitución
+doble(x) = x + x
+doble(4) = 4 + 4
 head [1,2,3,4,5]
 ```
+Usar `:t`
+
+```haskell
+1 + 8
+9
+(+) 1 14
+15
+
+(1.0 + 3) == (2 +2)
+
+div 4 2
+
+4 `div` 2
+
+[1,2,3] ++ "amigo"
+
+```
+usar parentesis para los negativos porque si no lo interpreta como resta 
 Laboratorio de estructuras discretas 2021-1
 ```shell
 ghci> False || True  
