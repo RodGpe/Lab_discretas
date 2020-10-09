@@ -9,6 +9,16 @@ En un lenguaje de programación funcional, como su nombre lo indica, todas sus e
 En Haskell una __función__ es un mapeo que toma uno o más __argumentos__ de un __tipo__ y produce una __expresión__ a través de instrucciones.
 Un __tipo__ es un conjunto de elementos que son creados por una definición formal.
 
+### Caracteristicas de Haskell
+
++ Programas concisos
++ Estáticamente tipado
++ Uso de listas por comprensión
++ Funciones recursivas
++ Permite el uso de funciones de orden superior (Funciones que aceptan funciones)
++ Funciones genéricas
++ Evaluación perezosas
+
 ### Instalación Haskell
 
 ```shell
@@ -16,13 +26,6 @@ $ sudo apt-get install ghc
 $ sudo dnf install ghc
 $ sudo pacman -S ghc
 ```
-
-```math
-a^2+b^2=c^2
-```
-
-This math is inline $`a^2+b^2=c^2`$.
-
 
 ```shell
 $ ghci Prelude > (Cargar módulos)
