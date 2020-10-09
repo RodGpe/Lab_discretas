@@ -32,6 +32,17 @@ Un __tipo__ es un conjunto de elementos que son creados por una definición form
 
 Vale mencionar que McCarty, Backus y Milner recibieron el premio Turing, que es considerado el Nobel de computación.
 
+### Entornos
+
+GCH: (Glasgow Haskell Compiler) Más popular. ghci es el intérprete interactivo.
+
+### Interpretes
+Es un programa que analiza un programa y lo ejecuta.
+
+El intérprete toma un programa y lo convierten en código máquina hasta que sea necesario.
+
+Es más sencillo, pero ineficiente a comparación del compilado.
+
 ### Instalación Haskell
 
 ```shell
