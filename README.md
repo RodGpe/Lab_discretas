@@ -21,6 +21,8 @@ $ sudo pacman -S ghc
 a^2+b^2=c^2
 ```
 
+This math is inline $`a^2+b^2=c^2`$.
+
 
 ```shell
 $ ghci Prelude > (Cargar módulos)
