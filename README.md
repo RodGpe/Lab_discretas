@@ -5,3 +5,7 @@
 x = 1 + 2
 ```
 Laboratorio de estructuras discretas 2021-1
+```shell
+ls
+```
+Eso fue la shell
