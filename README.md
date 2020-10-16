@@ -330,3 +330,102 @@ mod :: a -> a -> a
 (/) :: a -> a -> a
 recip :: a -> a
 ```
+
+### Guardas o guardias
+Haskell tiene distintas maneras de definir una función que escojen entre un número de posbiles resultados. La más sencilla son la _expresiones condicionales_ las cuales usan una expresión lógica llamada _condición_ que escoge entre dos resultados del mismo tipo.
+Si la condición es `True` entonces se escoge la primera y si es `False` entonces la segunda se escoge. Por ejemplo:
+```haskell
+abs' :: Int -> Int
+abs' = if n>= then n else -n
+```
+Claro que puede ser escrita sobre la misma línea pero se lee mejor así:
+```haskell
+abs' = if n>= 0
+       then n
+       else -n
+```
+Además de que podemos anidar las condicionales, por ejemplo una función que regresa el signo de un entero:
+```haskell
+signum :: Int -> Int
+signum n = if n < 0 
+           then -1 
+           else
+           if n == 0 then 0 else 1
+```
+### Expresiones con guardas
+Como alternativa de usar expresiones condicionales las funciones también pueden ser definidas usando _expresiones con guardas_, en cuales una secuencia de expresiones lógicas llamadas _guardas_ son usadas para elegir entre una secuencia de resultados del mismo tipo. Por ejemplo:
+```haskell
+abs' n  | n>= 0     = n
+        | otherwise = -n
+```
+El simbolo `|` se lee _tal que_ y la guarda `otherwise` esta definida en el preludio que siempre se evalua a verdadero, `otherwise = True`. No es necesario terminar con `otherwise` pero es una manera conveniente de cachar todos los casos no considerados antes.
+
+El benficio principal de usar guardas es que las expreciones con multiple guardas son mucho más fácil de leer. Por ejemplo:
+
+```haskell
+signum n | n < 0   = 1
+         | n == 0  = 0
+         | otherwise = 1
+```
+
+### Ajuste o caza de patrones
+
+Muchas funciones tienen una simple e intuitiva definición usando _ajuste o caza de patrones_, en el cual una secuencia de expresiones sintanticas llamadas _patrones_ son usadas para escoger entre una secuencia de resultados del mismo tipo. Si el primer patrón _ajusta o caza_ entonces el primer resultado se escoge. Por ejemplo, el operador `not` que regresa la negación de dos valores lógicos puede definirse así.
+```haskell
+not :: Bool -> Bool
+not False = True
+not True = False
+```
+Funciones con más de un argumento tambíen puede usar caza de patrones. Por ejemplo la conjunción `&&`,
+```haskell
+(&&) :: Bool -> Bool -> Bool
+True && True    = True
+True && False   = False
+False && True   = False
+False && False  = False
+```
+Pero, esta definición puede ser simplificada si combinamos las últimas tres acuaciones en una sola ecuación que regrese `False` independientemente de los valores de sus dos argumentos, usando _patrón comodín_ que caza con cualquier valor:
+
+```haskell
+True $$ True = True 
+_    $$  _   = False
+```
+
+### Alias
+```haskell
+type R2 = (Double, Double)
+phoneBook :: [(String,String)]  
+phoneBook =      
+    [("betty","555-2938")     
+    ,("bonnie","452-2928")     
+    ,("patsy","493-2928")     
+    ,("lucille","205-2928")     
+    ,("wendy","939-8282")     
+    ,("penny","853-2492")     
+    ]  
+```
++ Nombres de funciones empiezan con minusculas
++ Nombre de los type inician con mayúscula
++ Toda función debe tener una firma
++ Comentarios descriptivos
++ Estructura
+
+```haskell
+--comentarios iniciales
+module Nombre where
+-- Tipos definidos
+-- Funciones principales
+-- Funciones auxiliares
+-- Ejemplos
+```
+
+Para definir un nuevo tipo de dato
+```haskell
+data Formula = 
+ Prop Var
+ | Neg Formula
+ | Formula :$: Formula
+ | Formula :|: Formula
+ | Formula :=>: Formula
+ | Formula :<=>: Formula derving (Show, Eq, Ord)
+```
