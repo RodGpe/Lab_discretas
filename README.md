@@ -246,3 +246,87 @@ En matemáticas, dada una función _f_ del tipo _f:(X __x__ Y)-> Z_, currificán
 
 Intuitivamente, la currificación expone que "Si fijas algunos argumentos, tendrás una función de los argumentos restantes". Por ejemplo, si la función div significa la versión currificada de la operación x / y, entonces div con el parámetro x fijado en 1 es otra función: igual que la función inv que devuelve la inversa multiplicativa de sus argumentos, definida por inv(y) = 1 / y.
 
+En haskell entonces son equivalentes las siguientes firmas
+
+```haskell
+--funciones que suman 3 numeros
+
+suma :: Int -> Int -> Int -> Int
+suma x y z = x + y + z
+
+suma' :: Int -> (Int -> (Int -> Int))
+suma' x y z = x + y + z
+```
+
+Además de ser interesantes por sí mismas las funciones currificadas son más flexibles que, digamos, funciones en tuplas, porque funciones pueden ser parcialmente aplicadas con menos de sus argumentos completos. For ejemplo, la función  que incrementa un entero por 1 puede ser dado mediante la aplicación parcial  de `suma 1 :: Int -> Int`.
+ ### Sobrecargando tipos
+ 
+ El operador aritmético `+` calcula la suma de cualesquiera dos números del mismo tipo numerico.
+ ```console
+ > 1 + 2
+ 3
+ > 1.0 + 2.0
+ 3.0
+ ```
+ La idea de que `+` puede ser aplicada a cualquier número de tipo numerico es precisada en su tipo mediante al inclusión de una _restricción de clase_. Las restricciones de clase son escritas de la forma `C a` donde `C` es el nombre de una clase y `a` es una variable de tipo. Por ejemplo, el tipo de la adición es la siguiente.
+ ```haskell
+ (+) :: Num a => a -> a -> a
+ ```
+ Esto es, para cualquier tipo `a` que es una _instancia_ de la clase `Num` de tipos numericos, la función `(+)` tiene un tipo `a -> a -> a`.
+ Un tipo que tiene una o más restricciones de clase se llama _sobrecargado_, así como una expresión con tal tipo. Por lo tanto `Num a => a -> a -> a` es un tipo sobrecargado y `(+)` es una función sobrecargada. Más general, la matoria de las funciones numericas que tiene Prelude son sobrecargadas. Por ejemplo 
+ ```haskell
+ (*)   :: Num a => a -> a -> a
+negate :: Num a => a -> a
+abs    :: Num a => a -> a
+ ```
+Los números por sí mismos son sobrecargados, es decir que `3 :: Num a => a` signigifica que para cualquier tipo numerico `a`, el valor `3` tiene tipo `a`. Así el valor `3` puede ser un Int, Float o más general un valor de cualquier tipo numérico. Dependiendo del contexto en el que sea usado.
+
+### Clases básicas
+Recuerda que un tipo es una colección de valores que se relacionan. Sobre esta noción, una class es una collección de tipos que soportan ciertas operaciones sobrecargadas llamadas _metodos_. Haskell provee de clases que están ya en el lenguaje:
+
+`Eq`
+```haskell
+(==) :: a -> a -> Bool
+(/=) :: a -> a -> Bool
+```
+
+`Ord`
+```haskell
+(<) :: a -> a -> Bool
+(<=) :: a -> a -> Bool
+(>) :: a -> a -> Bool
+(>=) :: a -> a -> Bool
+min :: a -> a -> a
+max :: a -> a -> a
+```
+`Show`
+```haskell
+show :: a -> String
+```
+
+`Read`
+```haskell
+read :: String -> a
+```
+
+`Num`
+```haskell
+(+) :: a -> a -> a
+(-) :: a -> a -> a
+(*) :: a -> a -> a
+negate :: a -> a
+abs :: a -> a
+signum :: a -> a
+```
+
+`Integral`
+```haskell
+div :: a -> a -> a
+mod :: a -> a -> a
+```
+
+`Fractional`
+```haskell
+(/) :: a -> a -> a
+recip :: a -> a
+```
