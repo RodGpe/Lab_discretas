@@ -218,4 +218,31 @@ no queda claro quien es el numerador y el denomidador, pero si lo escribimos as�
 ```
 Se lee claramente que 4 se divide entre 2
 
-Para usar la notación infija se tiene que encerrar la función entre comillas invertidas \`  \`  
+Para usar la notación infija se tiene que encerrar la función entre comillas invertidas \`  \`  .
+
+La precedencia de las operaciones es la que normalmente se usa en matemátcias, es decir `2 * 3 + 4` es equivalente a `(2 * 3) + 4`. La aplicación de funciones tiene la mayor precedencia, por ejemplo, `2 * suma 3 4` es equivalente a `2 * ( 3 + 4 )`.
+
+### Más sobre clases tipos y clases
+
+Un tipo es una colección de valores que se relacionan. Por ejemplo, el tipo `Bool` contiene los dos valores lógicos `False` y `True` mientras que el tipo `Bool -> Bool` contiene todas las funciones que mapean argumentos de `Bool` a resultados de `Bool` tal como la es la función de negación. Usamos la notacin `v :: T` que significa que el valor de `v` es de tipo `T` y se lee, _v es de tipo T_. Por ejemplo 
+```haskell
+False :: Bool
+
+not :: Bool -> Bool
+```
+En haskell __toda expreción debe tener un tipo__ que es calculado antes de la evaluación de la expresión por un proceso llamado _inferencia de tipos_
+
+Una tupla es una secuencia finita de componentes con posibles tipos distintos.
+
+## Currificación
+
+Toda función en haskell toma exactamente un argumento y regresa una expresión que puede ser otra función o un tipo específico.
+Así que ¿Como es posible que hayamos definido y usado varias funciones que toman mas de un parámetro? Bueno ¡Es un buen truco! Todas las funciones que hemos usado hasta el momento y aceptaban más de un parámetro han sido funciones currificadas.
+En la ciencia de la computación, currificar es la técnica inventada por Moses Schönfinkel y Gottlob Frege que consiste en transformar una función que utiliza múltiples argumentos (o más específicamente una n-tupla como argumento) en una secuencia de funciones que utilizan un único argumento. (Eso es la operación inversa a la composición de funciones en matemáticas).
+
+El nombre "currificar", acuñado por Christopher Strachey en 1967, es una referencia al lógico Haskell Curry. 
+
+En matemáticas, dada una función _f_ del tipo _f:(X __x__ Y)-> Z_, currificándola sería una función del tipo _f: X -> (Y -> Z)_. En otras palabras, _curry(f)_ toma un argumento del tipo _X_  y retorna una función del tipo _Y -> Z_. Descurrificar es la transformación inversa.
+
+Intuitivamente, la currificación expone que "Si fijas algunos argumentos, tendrás una función de los argumentos restantes". Por ejemplo, si la función div significa la versión currificada de la operación x / y, entonces div con el parámetro x fijado en 1 es otra función: igual que la función inv que devuelve la inversa multiplicativa de sus argumentos, definida por inv(y) = 1 / y.
+
