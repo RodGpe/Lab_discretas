@@ -390,6 +390,17 @@ Pero, esta definición puede ser simplificada si combinamos las últimas tres ac
 True $$ True = True 
 _    $$  _   = False
 ```
+#### Patrones el tuplas
+
+Una tupla de patrones en sí un patrón, el cual caza cualquier tupla de la misma aridad cuyos componentes todos cazan el corrrespondiente patrón en orden. Por ejemplo Prelude tiene la función `fst` y `snd` que regresa el primer y el segundo componenete de un __Par__ o dupla.
+
+```haskell
+fst :: (a,b) -> a
+fst (x,_) = x
+
+snd :: (a,b) -> b
+snd (_,y) = y
+```
 
 ### Alias
 ```haskell
@@ -404,6 +415,8 @@ phoneBook =
     ,("penny","853-2492")     
     ]  
 ```
+
+### Buenas prácticas
 + Nombres de funciones empiezan con minusculas
 + Nombre de los type inician con mayúscula
 + Toda función debe tener una firma
