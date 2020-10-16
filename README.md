@@ -188,3 +188,34 @@ Una clase es una interfaz que define algún comportamiento. Ej
 + Eq
 + Ord
 + Enum
+
+## Clase 3
+
+Sobre la clase pasada:
+
+Los operadores y las funciones utilizan en su mayoria notación prefija:
+Ej
+```haskell
+--suma de 2 números
+(+) 1 2
+
+--concatenación de 2 listas
+(++)  [1,2] [3,4]
+
+--Aplicar la función suma a dos números
+suma 1 2
+```
+
+Si bien esta manera nos garantiza consistencia sacrifica facilidad de lectura, por ejemplo 
+
+```haskell
+(div) 4 2 
+```
+no queda claro quien es el numerador y el denomidador, pero si lo escribimos así:
+
+```haskell
+4 `div` 2
+```
+Se lee claramente que 4 se divide entre 2
+
+Para usar la notación infija se tiene que encerrar la función entre comillas invertidas \`  \`  
