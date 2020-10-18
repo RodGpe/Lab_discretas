@@ -284,13 +284,13 @@ Los números por sí mismos son sobrecargados, es decir que `3 :: Num a => a` si
 ### Clases básicas
 Recuerda que un tipo es una colección de valores que se relacionan. Sobre esta noción, una clase es una collección de tipos que soportan ciertas operaciones sobrecargadas llamadas _metodos_. Haskell provee de clases que están ya en el lenguaje:
 
-`Eq`
+La clase `Eq` que tiene los siguiente métodos:
 ```haskell
 (==) :: a -> a -> Bool
 (/=) :: a -> a -> Bool
 ```
 
-`Ord`
+La clase `Ord` que tiene los siguientes métodos:
 ```haskell
 (<) :: a -> a -> Bool
 (<=) :: a -> a -> Bool
@@ -299,17 +299,17 @@ Recuerda que un tipo es una colección de valores que se relacionan. Sobre esta 
 min :: a -> a -> a
 max :: a -> a -> a
 ```
-`Show`
+La clase `Show` que tiene los siguiente métodos:
 ```haskell
 show :: a -> String
 ```
 
-`Read`
+La clase `Read` que tiene los siguientes métodos:
 ```haskell
 read :: String -> a
 ```
 
-`Num`
+La clase `Num` que tiene los siguientes métodos:
 ```haskell
 (+) :: a -> a -> a
 (-) :: a -> a -> a
@@ -319,13 +319,13 @@ abs :: a -> a
 signum :: a -> a
 ```
 
-`Integral`
+La clase `Integral` que tiene los sguientes métodos:
 ```haskell
 div :: a -> a -> a
 mod :: a -> a -> a
 ```
 
-`Fractional`
+La clase `Fractional` que tiene los siguientes métodos:
 ```haskell
 (/) :: a -> a -> a
 recip :: a -> a
@@ -376,15 +376,16 @@ not' :: Bool -> Bool
 not' False = True
 not' True = False
 ```
-Funciones con más de un argumento tambíen puede usar caza de patrones. Por ejemplo la conjunción `&&`,
+Funciones con más de un argumento tambíen puede usar caza de patrones. Por ejemplo la función conjunción lógica `conj`,
 ```haskell
-(&&) :: Bool -> Bool -> Bool
-True && True    = True
-True && False   = False
-False && True   = False
-False && False  = False
+conj :: Bool -> Bool -> Bool
+
+conj True  True    = True
+conj True  False   = False
+conj False  True   = False
+conj False  False  = False
 ```
-Pero, esta definición puede ser simplificada si combinamos las últimas tres acuaciones en una sola ecuación que regrese `False` independientemente de los valores de sus dos argumentos, usando _patrón comodín_ que caza con cualquier valor:
+Pero, esta definición puede ser simplificada si combinamos las últimas tres ecuaciones en una sola ecuación que regrese `False` independientemente de los valores de sus dos argumentos, usando _patrón comodín_ que caza con cualquier valor:
 
 ```haskell
 True $$ True = True 
