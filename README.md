@@ -282,7 +282,7 @@ abs    :: Num a => a -> a
 Los números por sí mismos son sobrecargados, es decir que `3 :: Num a => a` signigifica que para cualquier tipo numerico `a`, el valor `3` tiene tipo `a`. Así el valor `3` puede ser un Int, Float o más general un valor de cualquier tipo numérico. Dependiendo del contexto en el que sea usado.
 
 ### Clases básicas
-Recuerda que un tipo es una colección de valores que se relacionan. Sobre esta noción, una class es una collección de tipos que soportan ciertas operaciones sobrecargadas llamadas _metodos_. Haskell provee de clases que están ya en el lenguaje:
+Recuerda que un tipo es una colección de valores que se relacionan. Sobre esta noción, una clase es una collección de tipos que soportan ciertas operaciones sobrecargadas llamadas _metodos_. Haskell provee de clases que están ya en el lenguaje:
 
 `Eq`
 ```haskell
@@ -332,7 +332,7 @@ recip :: a -> a
 ```
 
 ### Guardas o guardias
-Haskell tiene distintas maneras de definir una función que escojen entre un número de posbiles resultados. La más sencilla son la _expresiones condicionales_ las cuales usan una expresión lógica llamada _condición_ que escoge entre dos resultados del mismo tipo.
+Haskell tiene distintas maneras de definir una función que escogen entre un número de posbiles resultados. La más sencilla son la _expresiones condicionales_ las cuales usan una expresión lógica llamada _condición_ que escoge entre dos resultados del mismo tipo.
 Si la condición es `True` entonces se escoge la primera y si es `False` entonces la segunda se escoge. Por ejemplo:
 ```haskell
 abs' :: Int -> Int
@@ -363,7 +363,7 @@ El simbolo `|` se lee _tal que_ y la guarda `otherwise` esta definida en el prel
 El benficio principal de usar guardas es que las expreciones con multiple guardas son mucho más fácil de leer. Por ejemplo:
 
 ```haskell
-signum n | n < 0   = 1
+signum n | n < 0   = -1
          | n == 0  = 0
          | otherwise = 1
 ```
@@ -372,9 +372,9 @@ signum n | n < 0   = 1
 
 Muchas funciones tienen una simple e intuitiva definición usando _ajuste o caza de patrones_, en el cual una secuencia de expresiones sintanticas llamadas _patrones_ son usadas para escoger entre una secuencia de resultados del mismo tipo. Si el primer patrón _ajusta o caza_ entonces el primer resultado se escoge. Por ejemplo, el operador `not` que regresa la negación de dos valores lógicos puede definirse así.
 ```haskell
-not :: Bool -> Bool
-not False = True
-not True = False
+not' :: Bool -> Bool
+not' False = True
+not' True = False
 ```
 Funciones con más de un argumento tambíen puede usar caza de patrones. Por ejemplo la conjunción `&&`,
 ```haskell
@@ -405,15 +405,7 @@ snd (_,y) = y
 ### Alias
 ```haskell
 type R2 = (Double, Double)
-phoneBook :: [(String,String)]  
-phoneBook =      
-    [("betty","555-2938")     
-    ,("bonnie","452-2928")     
-    ,("patsy","493-2928")     
-    ,("lucille","205-2928")     
-    ,("wendy","939-8282")     
-    ,("penny","853-2492")     
-    ]  
+type PhoneBook = [(String,String)]  
 ```
 
 ### Buenas prácticas
