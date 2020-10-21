@@ -336,7 +336,7 @@ Haskell tiene distintas maneras de definir una función que escogen entre un nú
 Si la condición es `True` entonces se escoge la primera y si es `False` entonces la segunda se escoge. Por ejemplo:
 ```haskell
 abs' :: Int -> Int
-abs' = if n>= then n else -n
+abs' = if n>= 0 then n else -n
 ```
 Claro que puede ser escrita sobre la misma línea pero se lee mejor así:
 ```haskell
