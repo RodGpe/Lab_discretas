@@ -340,7 +340,7 @@ abs' = if n>= 0 then n else -n
 ```
 Claro que puede ser escrita sobre la misma línea pero se lee mejor así:
 ```haskell
-abs' = if n>= 0
+abs' n = if n>= 0
        then n
        else -n
 ```
