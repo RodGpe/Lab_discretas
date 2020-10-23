@@ -425,7 +425,7 @@ module Nombre where
 -- Ejemplos
 ```
 
-## Clase 5
+## Clase 4
 
 ### Introducción a los tipos de datos algebraicos
 
@@ -657,7 +657,20 @@ ghci> [minBound .. maxBound] :: [Day]
 Bastante impresionante.
 ```
 
-patrones en lista
-(x:xs)
-(x:y:xs)
+Instanciar:
+Cuando instanciamos, nosotros le indicamos a Haskell cuál va a ser el resultado del método usado, o sea, nosotros escribimos el cuerpo de los métodos usando instance Clase TipoUtilizado where
+```haskell
+data Time = TF Int Int | TW Int Int Bool
+
+instance Show Time where
+  show a = func a
+
+
+func :: Time -> String
+func (TF h m)   = show h ++ " : " ++ show m ++ " HRS"
+func (TW h m b) = show h ++ " : " ++ show m ++ if b then "PM" else "AM"
+```
+
+TF 13 55 -> “13 : 55 HRS” TW 1 55 True -> 1 : 55 PM
+
 
