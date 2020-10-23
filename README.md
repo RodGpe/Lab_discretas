@@ -654,10 +654,10 @@ ghci> [Thursday .. Sunday]
 [Thursday,Friday,Saturday,Sunday]
 ghci> [minBound .. maxBound] :: [Day]
 [Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]
-Bastante impresionante.
 ```
+Bastante impresionante.
 
-Instanciar:
+### Instanciar:
 Cuando instanciamos, nosotros le indicamos a Haskell cuál va a ser el resultado del método usado, o sea, nosotros escribimos el cuerpo de los métodos usando instance Clase TipoUtilizado where
 ```haskell
 data Time = TF Int Int | TW Int Int Bool
