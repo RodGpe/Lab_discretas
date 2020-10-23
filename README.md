@@ -425,13 +425,226 @@ module Nombre where
 -- Ejemplos
 ```
 
-Para definir un nuevo tipo de dato
-```haskell
-data Formula = 
- Prop Var
- | Neg Formula
- | Formula :$: Formula
- | Formula :|: Formula
- | Formula :=>: Formula
- | Formula :<=>: Formula derving (Show, Eq, Ord)
-```
+## Clase 5
+
+### Introducción a los tipos de datos algebraicos
+
+Hasta ahora hemos jugado con muchos tipos: `Bool, Int, Cha`, etc. Pero ¿Cómo los creamos? Bueno, una forma es usar la palabra clave `data` para definir un tipo. Vamos a ver como está definido el tipo Bool en la librería estándar:
+
+data Bool = False | True
+
+data significa que vamos a definir un nuevo tipo de dato. La parte a la izquierda del = denota el tipo, que es Bool. La parte a la derecha son los constructores de datos. Estos especifican los diferentes valores que puede tener un tipo. El | se puede leer como una o. Así que lo podemos leer como: El tipo Bool puede tener un valor True o False. Tanto el nombre del tipo como el de los constructores de datos deben tener la primera letra en mayúsculas.
+
+De la misma forma podemos pensar que el tipo Int está definido como:
+
+
+data Int = -2147483648 | -2147483647 | ... | -1 | 0 | 1 | 2 | ... | 2147483647
+
+El primer y el último constructor de datos son el mínimo y el máximo valor posible del tipo Int. En realidad no está definido así, los tres puntos están ahí porque hemos omitido una buena cantidad de números, así que esto es solo para motivos ilustrativos.
+Cargando...
+Ahora vamos a pensar en como definiríamos una figura en Haskell. Una forma sería usar tuplas. Un círculo podría ser (43.1, 55.0, 10.4) donde el primer y el segundo campo son las coordenadas del centro del círculo mientras que el tercer campo sería el radio. Suena bien, pero esto nos permitiría también definir un vector 3D o cualquier otra cosa. Una solución mejor sería crear nuestro propio tipo que represente una figura. Digamos que una figura solo puede ser un círculo o un rectángulo:
+
+data Shape = Circle Float Float Float | Rectangle Float Float Float Float
+
+¿Qué es esto? Piensa un poco a que se parece. El constructor de datos `Circle` tiene tres campos que toman valores en coma flotante. Cuando creamos un constructor de datos, opcionalmente podemos añadir tipos después de él de forma que estos serán los valores que contenga. Aquí, los primeros dos componentes son las coordenadas del centro, mientras que el tercero es el radio. El constructor de datos Rectangle tiene cuatro campos que aceptan valores en coma flotante. Los dos primeros representan las coordenadas de la esquina superior izquierda y los otros dos las coordenadas de la inferior derecha.
+Ahora, cuando hablamos de campos, en realidad estamos hablando de parámetros. Los constructores de datos son en realidad funciones que devuelven un valor del tipo para el que fueron definidos. Vamos a ver la declaración de tipo de estos dos constructores de datos.
+
+ghci> :t Circle
+Circle :: Float -> Float -> Float -> Shape
+ghci> :t Rectangle
+Rectangle :: Float -> Float -> Float -> Float -> Shape
+
+Bien, los constructores de datos son funciones como todo lo demás ¿Quíen lo hubiera pensado? Vamos a hacer una función que tome una figura y devuleva su superficie o área:
+
+surface :: Shape -> Float
+surface (Circle _ _ r) = pi * r ^ 2
+surface (Rectangle x1 y1 x2 y2) = (abs $ x2 - x1) * (abs $ y2 - y1)
+
+La primera cosa destacable aquí es la declaración de tipo. Dice que toma una figura y devuelve un valor en coma flotante. No podemos escribir una declaración de tipo como Circle -> Float ya que Circle no es un tipo, Shape si lo es. Del mismo modo no podemos declarar una función cuya declaración de tipo sea True -> Int. La siguiente cosa que podemos destacar es que podemos usar el ajuste de patrones con los constructores. Ya hemos utilizado el ajuste de patrones con constructores anteriormente (en realidad todo el tiempo) cuando ajustamos valores como [], False, 5, solo que esos valores no tienen campos. Simplemente escribimos el constructor y luego ligamos sus campos a nombres. Como estamos interesados en el radio, realmente no nos importan los dos primeros valores que nos dicen donde está el círculo.
+
+ghci> surface $ Circle 10 20 10
+314.15927
+ghci> surface $ Rectangle 0 0 100 100
+10000.0
+
+Bien ¡Funciona! Pero si intentamos mostrar por pantalla Circle 10 20 5 en una sesión de GHCi obtendremos un error. Esto sucede porque Haskell aún no sabe como representar nuestro tipo con una cadena. Recuerda que cuando intentamos mostrar un valor por pantalla, primero Haskell ejecuta la función show para obtener la representación en texto de un dato y luego lo muestra en la terminal. Para hacer que nuestro tipo Shape forme parte de la clase de tipo Show hacemos esto:
+
+data Shape = Circle Float Float Float | Rectangle Float Float Float Float deriving (Show)
+
+No vamos a preocuparnos ahora mismo acerca de derivar. Simplemente diremos que si añadimos deriving (Show) al final de una declaración de tipo, automáticamente Haskell hace que ese tipo forme parte de la clase de tipos Show. Así que ahora ya podemos hacer esto:
+
+ghci> Circle 10 20 5
+Circle 10.0 20.0 5.0
+ghci> Rectangle 50 230 60 90
+Rectangle 50.0 230.0 60.0 90.0
+
+Nuestro tipo de dato es bueno, pero podría se mejor. Vamos a crear un tipo de dato intermedio que defina un punto en espacio bidimensional. Luego lo usaremos para hacer nuestro tipo más evidente.
+
+data Point = Point Float Float deriving (Show)
+data Shape = Circle Point Float | Rectangle Point Point deriving (Show)
+
+Te habrás dado cuenta de que hemos usado el mismo nombre para el tipo que para el constructor de datos. No tiene nada de especial, es algo común usar el mismo nombre que el del tipo si solo hay un constructor de datos. Así que ahora Circle tiene dos campos, uno es el del tipo Point y el otro del tipo Float. De esta forma es más fácil entender que es cada cosa. Lo mismo sucede para el rectángulo. Tenemos que modificar nuestra función surface para que refleje estos cambios.
+
+surface :: Shape -> Float
+surface (Circle _ r) = pi * r ^ 2
+surface (Rectangle (Point x1 y1) (Point x2 y2)) = (abs $ x2 - x1) * (abs $ y2 - y1)
+
+Lo único que hemos cambiado han sido los patrones. Hemos descartado completamente el punto en el patrón del círculo. Por otra parte, en el patrón del rectángulo, simplemente hemos usado un ajuste de patrones anidado para obtener las coordenadas de los puntos. Si hubiésemos querido hacer una referencia directamente a los puntos por cualquier motivo podríamos haber utilizado un patrón como.
+
+ghci> surface (Rectangle (Point 0 0) (Point 100 100))
+10000.0
+ghci> surface (Circle (Point 0 0) 24)
+1809.5574
+
+
+¿Cómo sería una función que desplaza una figura? Tomaría una figura, la cantidad que se debe desplazar en el eje x, la cantidad que se debe desplazar en el eje y y devolvería una nueva figura con las mismas dimensiones pero desplazada.
+
+nudge :: Shape -> Float -> Float -> Shape
+nudge (Circle (Point x y) r) a b = Circle (Point (x+a) (y+b)) r
+nudge (Rectangle (Point x1 y1) (Point x2 y2)) a b = Rectangle (Point (x1+a) (y1+b)) (Point (x2+a) (y2+b))
+
+Bastante sencillo. Añadimos las cantidades a desplazar a los puntos que representan la posición de las figuras.
+
+ghci> nudge (Circle (Point 34 34) 10) 5 10
+Circle (Point 39.0 44.0) 10.0
+
+Si quisiéramos exportar las funciones y tipos que acabamos de crear en un módulo, podríamos empezar con esto:
+
+module Shapes
+( Point(..)
+, Shape(..)
+, surface
+, nudge
+, baseCircle
+, baseRect
+) where
+
+### Sintaxis de registro
+
+data Person = Person String String Int Float String String deriving (Show)
+
+Puede escribirse como: 
+
+data Person = Person { firstName :: String
+                     , lastName :: String
+                     , age :: Int
+                     , height :: Float
+                     , phoneNumber :: String
+                     , flavor :: String
+                     } deriving (Show)
+
+Lo que permite:
+
+ghci> :t flavor
+flavor :: Person -> String
+ghci> :t firstName
+firstName :: Person -> String
+
+
+
+### Parámetros de tipo
+
+Un constructor de datos puede tomar algunos valores como parámetros y producir un nuevo valor. Por ejemplo, el constructor Car toma tres valores y produce un valor del tipo coche. De forma similar, un constructor de tipos puede tomar tipos como parámetros y producir nuevos tipos.
+
+data Maybe a = Nothing | Just a
+
+### Instancias derivadas
+
+Un tipo puede ser una instancia de esa clase si soporta ese comportamiento. Ejemplo: El tipo Int es una instancia de la clase Eq, ya que la clase de tipos Eq define el comportamiento de cosas que se pueden equiparar. Y como los enteros se pueden equiparar, Int es parte de la clase Eq. La utilidad real está en las funciones que actúan como interfaz de Eq, que son == y /=. Si un tipo forma parte de la clase Eq, podemos usar las funciones como == con valores de ese tipo. Por este motivo, expresiones como 4 == 4 y "foo" /= "bar" son correctas.
+Primero creamos nuestro tipo de dato y luego pensamos como qué puede comportarse. Si puede comportarse como algo que puede ser equiparado, hacemos que sea miembro de la clase Eq. Si puede ser puesto en algún orden, hacemos que sea miembro de la clase Ord.
+
+Más adelante veremos como podemos hacer manualmente que nuestros tipos sean una instancia de una clase de tipos implementando las funciones que esta define. Pero ahora, vamos a ver como Haskell puede automáticamente hacer que nuestros tipos pertenezcan a una de las siguientes clases: Eq, Ord, Enum, Bounded, Show y Read. Haskell puede derivar el comportamiento de nuestros tipos en estos contextos si usamos la palabra clave deriving cuando los definimos.
+
+Considera el siguiente tipo de dato:
+data Person = Person { firstName :: String
+                     , lastName :: String
+                     , age :: Int
+                     }
+                     
+Describe a una persona. Vamos a asumir que ninguna persona tiene la misma combinación de nombre, apellido y edad. Ahora, si tenemos registradas a dos personas ¿Tiene sentido saber si estos dos registros pertenecen a la misma persona? Parece que sí. Podemos compararlos por igualdad y ver si son iguales o no. Por esta razón tiene sentido que este tipo se miembro de la clase de tipo Eq. Derivamos la instancia:
+
+data Person = Person { firstName :: String
+                     , lastName :: String
+                     , age :: Int
+                     } deriving (Eq)
+
+
+Cuando derivamos una instancia de Eq para un tipo y luego intentamos comparar dos valores de ese tipo usando == o /=, Haskell comprobará si los constructores de tipo coinciden (aunque aquí solo hay un constructor de tipo) y luego comprobará si todos los campos de ese constructor coinciden utilizando el operador = para cada par de campos. Solo tenemos que tener en cuenta una cosa, todos los campos del tipo deben ser también miembros de la clase de tipos Eq. Como String y Int ya son miembros, no hay ningún problema. Vamos a comprobar nuestra instancia Eq.
+
+
+ghci> let mikeD = Person {firstName = "Michael", lastName = "Diamond", age = 43}
+ghci> let adRock = Person {firstName = "Adam", lastName = "Horovitz", age = 41}
+ghci> let mca = Person {firstName = "Adam", lastName = "Yauch", age = 44}
+ghci> mca == adRock
+False
+ghci> mikeD == adRock
+False
+ghci> mikeD == mikeD
+True
+ghci> mikeD == Person {firstName = "Michael", lastName = "Diamond", age = 43}
+True
+
+
+Vamos a hacer que nuestro tipo de dato Person forme parte también de las clases Show y Read.
+data Person = Person { firstName :: String
+                     , lastName :: String
+                     , age :: Int
+                     } deriving (Eq, Show, Read)
+                     
+                     
+Ahora podemos mostrar una persona por la terminal.
+
+ghci> let mikeD = Person {firstName = "Michael", lastName = "Diamond", age = 43}
+ghci> mikeD
+Person {firstName = "Michael", lastName = "Diamond", age = 43}
+ghci> "mikeD is: " ++ show mikeD
+"mikeD is: Person {firstName = \"Michael\", lastName = \"Diamond\", age = 43}"
+
+Read es prácticamente la clase inversa de Show. Show sirve para convertir nuestro tipo a una cadena, Read sirve para convertir una cadena a nuestro tipo. Aunque recuerda que cuando uses la función read hay que utilizar una anotación de tipo explícita para decirle a Haskell que tipo queremos como resultado. Si no ponemos el tipo que queremos como resultado explícitamente, Haskell no sabrá que tipo queremos.
+
+ghci> read "Person {firstName =\"Michael\", lastName =\"Diamond\", age = 43}" :: Person
+Person {firstName = "Michael", lastName = "Diamond", age = 43}
+
+
+Podemos usar fácilmente los tipos de dato algebraicos para crear enumeraciones, y las clases de tipos Enum y Bounded nos ayudarán a ello. Considera el siguiente tipo de dato:
+
+data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+
+Como ningún contructor de datos tiene parámetros, podemos hacerlo miembro de la clase de tipos Enum. La clase Enum son para cosas que tinen un predecesor y sucesor. Tambien podemos hacerlo miembro de la clase de tipos Bounded, que es para cosas que tengan un valor mínimo posible y valor máximo posible. Ya que nos ponemos, vamos a hacer que este tipo tenga una instancia para todas las clases de tipos derivables que hemos visto y veremos que podemos hacer con él.
+
+data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+           deriving (Eq, Ord, Show, Read, Bounded, Enum)
+Como es parte de las clases de tipos Show y Read, podemos convertir valores de est tipo a y desde cadenas.
+
+ghci> Wednesday
+Wednesday
+ghci> show Wednesday
+"Wednesday"
+ghci> read "Saturday" :: Day
+Saturday
+
+Como es parte de las clases de tipos Eq y Ord, podemos comparar o equiparar días.
+ghci> Saturday == Sunday
+False
+ghci> Saturday == Saturday
+True
+ghci> Saturday > Friday
+True
+ghci> Monday `compare` Wednesday
+LT
+También forma parte de Bounded, así que podemos obtener el día mas bajo o el día más alto.
+ghci> minBound :: Day
+Monday
+ghci> maxBound :: Day
+Sunday
+También es una instancia de la clase Enum. Podemos obtener el predecesor y el sucesor de un día e incluso podemos crear listas de rangos con ellos.
+ghci> succ Monday
+Tuesday
+ghci> pred Saturday
+Friday
+ghci> [Thursday .. Sunday]
+[Thursday,Friday,Saturday,Sunday]
+ghci> [minBound .. maxBound] :: [Day]
+[Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]
+Cargando...
+Bastante impresionante.
