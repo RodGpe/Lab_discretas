@@ -448,7 +448,7 @@ data Shape = Circle Float Float Float | Rectangle Float Float Float Float
 ```
 ¿Qué es esto? Piensa un poco a que se parece. El constructor de datos `Circle` tiene tres campos que toman valores en coma flotante. Cuando creamos un constructor de datos, opcionalmente podemos añadir tipos después de él de forma que estos serán los valores que contenga. Aquí, los primeros dos componentes son las coordenadas del centro, mientras que el tercero es el radio. El constructor de datos Rectangle tiene cuatro campos que aceptan valores en coma flotante. Los dos primeros representan las coordenadas de la esquina superior izquierda y los otros dos las coordenadas de la inferior derecha.
 Ahora, cuando hablamos de campos, en realidad estamos hablando de parámetros. Los constructores de datos son en realidad funciones que devuelven un valor del tipo para el que fueron definidos. Vamos a ver la declaración de tipo de estos dos constructores de datos.
-```console
+```shell
 ghci> :t Circle
 Circle :: Float -> Float -> Float -> Shape
 ghci> :t Rectangle
@@ -462,9 +462,9 @@ surface (Rectangle x1 y1 x2 y2) = (abs $ x2 - x1) * (abs $ y2 - y1)
 ```
 La primera cosa destacable aquí es la declaración de tipo. Dice que toma una figura y devuelve un valor en coma flotante. No podemos escribir una declaración de tipo como Circle -> Float ya que Circle no es un tipo, Shape si lo es. Del mismo modo no podemos declarar una función cuya declaración de tipo sea True -> Int. La siguiente cosa que podemos destacar es que podemos usar el ajuste de patrones con los constructores. Ya hemos utilizado el ajuste de patrones con constructores anteriormente (en realidad todo el tiempo) cuando ajustamos valores como [], False, 5, solo que esos valores no tienen campos. Simplemente escribimos el constructor y luego ligamos sus campos a nombres. Como estamos interesados en el radio, realmente no nos importan los dos primeros valores que nos dicen donde está el círculo.
 ```shell
-ghci> surface $ Circle 10 20 10
+ghci> surface ( Circle 10 20 10 )
 314.15927
-ghci> surface $ Rectangle 0 0 100 100
+ghci> surface ( Rectangle 0 0 100 100 )
 10000.0
 ```
 Bien ¡Funciona! Pero si intentamos mostrar por pantalla Circle 10 20 5 en una sesión de GHCi obtendremos un error. Esto sucede porque Haskell aún no sabe como representar nuestro tipo con una cadena. Recuerda que cuando intentamos mostrar un valor por pantalla, primero Haskell ejecuta la función show para obtener la representación en texto de un dato y luego lo muestra en la terminal. Para hacer que nuestro tipo Shape forme parte de la clase de tipo Show hacemos esto:
