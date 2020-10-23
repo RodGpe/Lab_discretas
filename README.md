@@ -448,7 +448,7 @@ data Shape = Circle Float Float Float | Rectangle Float Float Float Float
 ```
 ¿Qué es esto? Piensa un poco a que se parece. El constructor de datos `Circle` tiene tres campos que toman valores en coma flotante. Cuando creamos un constructor de datos, opcionalmente podemos añadir tipos después de él de forma que estos serán los valores que contenga. Aquí, los primeros dos componentes son las coordenadas del centro, mientras que el tercero es el radio. El constructor de datos Rectangle tiene cuatro campos que aceptan valores en coma flotante. Los dos primeros representan las coordenadas de la esquina superior izquierda y los otros dos las coordenadas de la inferior derecha.
 Ahora, cuando hablamos de campos, en realidad estamos hablando de parámetros. Los constructores de datos son en realidad funciones que devuelven un valor del tipo para el que fueron definidos. Vamos a ver la declaración de tipo de estos dos constructores de datos.
-```shell
+```console
 ghci> :t Circle
 Circle :: Float -> Float -> Float -> Shape
 ghci> :t Rectangle
