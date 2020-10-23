@@ -427,7 +427,7 @@ module Nombre where
 
 ## Clase 4
 
-### Introducción a los tipos de datos algebraicos
+### Introducción a los tipos de datos nuevos 
 
 Hasta ahora hemos jugado con muchos tipos: `Bool, Int, Cha`, etc. Pero ¿Cómo los creamos? Bueno, una forma es usar la palabra clave `data` para definir un tipo. Vamos a ver como está definido el tipo Bool en la librería estándar:
 ```haskell
