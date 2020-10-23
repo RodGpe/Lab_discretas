@@ -656,3 +656,8 @@ ghci> [minBound .. maxBound] :: [Day]
 [Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]
 Bastante impresionante.
 ```
+
+patrones en lista
+(x:xs)
+(x:y:xs)
+
