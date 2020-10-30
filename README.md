@@ -673,4 +673,50 @@ func (TW h m b) = show h ++ " : " ++ show m ++ if b then "PM" else "AM"
 
 TF 13 55 -> “13 : 55 HRS” TW 1 55 True -> 1 : 55 PM
 
+## Clase 5
 
+### Where y Let
+
+Supongamos un ejemplo para caza de patrones y la formula para el indice de masa corporal
+```haskell
+imcDecir :: Float -> Float -> String
+imcDecir masa altura
+ | masa / altura ^ 2 <= 18.5 = "bajo de peso"
+ | masa / altura ^ 2 <= 25.0 = "Estas bien"
+ | masa / altura ^ 2 <= 30.0 = "Estas gordito"
+ | otherwise                 = "Eres una ballenita" 
+```
+Aquí definimos 3 veces la misma función y lo pudimos escirbir así usando un `where` :
+```haskell
+imcDecir :: Float -> Float -> String
+imcDecir masa altura
+ | imc <= 18.5 = "bajo de peso"
+ | imc <= 25.0 = "Estas bien"
+ | imc <= 30.0 = "Estas gordito"
+ | otherwise   = "Eres una ballenita" 
+ where imc = masa / altura  ^ 2
+ ```
+ Podemos escribir varias definiciones en el mismo `where`.
+
+```haskell
+imcDecir :: Float -> Float -> String
+imcDecir masa altura
+ | imc <= flaco = "bajo de peso"
+ | imc <= normal = "Estas bien"
+ | imc <= gordito = "Estas gordito"
+ | otherwise   = "Eres una ballenita" 
+  where  imc = masa / altura  ^ 2
+         flaco = 18.5
+         normal = 25.0
+         gordito = 30.0
+ ```
+ 
+ ### Let in
+ Muy similar es un `where`. La diferencia es que Let es más local, no se puede usar en guardas.
+ 
+ ```haskell
+cilindro :: Float -> Float -> Float  
+cilindro r h = 
+    let areaLateral = 2 * pi * r * h  
+        areaSuperior = pi * r ^2  
+    in  areaLateral + 2 * areaSuperior  
