@@ -720,3 +720,12 @@ cilindro r h =
     let areaLateral = 2 * pi * r * h  
         areaSuperior = pi * r ^2  
     in  areaLateral + 2 * areaSuperior  
+```
+### Recursión 
+
+Ejemplo de una función recursiva
+```haskell
+factorial :: Integer -> Integer
+factorial 0 = 1
+factorial n = n * factorial (n - 1)
+```
